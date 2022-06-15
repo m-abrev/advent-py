@@ -112,83 +112,59 @@ def day2pt2(x,noun,verb):
             break
     return x[0]
 
-# First function attempt (for loop per link: https://stackoverflow.com/questions/34517540/find-all-combinations-of-a-list-of-numbers-with-a-given-sum)
-def search_day2pt2(memory, vars, target, output = 0):
-    """ 
-    Recursive function that tests all elements of a list of possibilities (vars) to determine 
-    if they yield the desired Opcode output (target).
-
-    memory (list): input list (Intcode) provided for use by the Opcode logic func, day2pt2
-    vars (list): list of all possible inputs
-    target (int): the output we are seeking
-    output (int): input that changes with recursion and represents the "result" to be tested vs. target
-    day2pt2 (func): used inside this func to call the day's Opcode logic
-    """
-    # output = day2pt2(memory,n,v)
-    if output == target:
-        print("Found. Noun and verb: ", str(n), ", ", str(v))
-        print("Output: ",str(output))
-        return 
-
-    for i in range(len(vars)):
-        n, v = vars[i]
-        memory_rec = memory.copy()
-        output_rec = day2pt2(memory,n,v) # Input (or "memory") kept having the [0] pos overwritten
-        # memory = input.copy()
-        print("OK we have noun ",str(n)," and verb ",str(v)," now.")
-        print("We have memory with initial Opcode pointers: ", memory[0],",",memory[4],",",memory[8])
-        print("The output is: ",str(output_rec))
-
-        search_day2pt2(memory_rec, vars, target, output = output_rec)
-
-# Second function attempt (no for loop)
-def search_day2pt2(memory, vars, target, output = 0):
-    """ 
-    Recursive function that tests all elements of a list of possibilities (vars) to determine 
-    if they yield the desired Opcode output (target).
-    """
-    # output = day2pt2(memory,n,v)
-    if output == target:
-        print("Found. Noun and verb: ", str(n), ", ", str(v))
-        print("Output: ",str(output))
-        return 
-
-    n, v = vars.pop(0)
-    memory_rec = memory.copy()
-    output_rec = day2pt2(memory,n,v) # Input (or "memory") kept having the [0] pos overwritten
-    print("OK we have noun ",str(n)," and verb ",str(v)," now.")
-    print("We have memory with initial Opcode pointers: ", memory[0],",",memory[4],",",memory[8])
-    print("The output is: ",str(output_rec))
-    print("Our length of remaining vars is ",str(len(vars)),"\n")
-
-    search_day2pt2(memory_rec, vars, target, output = output_rec)
-
-# Make sure input is clean before running these fxns
-with open('2019/input/day2.txt', 'r') as file:
-    input = file.readlines()
-input = [int(i) for i in input[0].replace('\n','').split(',')] # Need clean input
-
-# Make a big list of all possible combinations (1,99), inclusive of duplicates like [1,1]
+target = 19690720
+memory = input.copy()
 poss = [list(comb) for comb in itertools.product(set(range(1,100,1)),repeat=2)] # 9801 possible pairs
+for n, v in poss: 
+    memory_rec = memory.copy()
+    output_rec = day2pt2(memory_rec,n,v)
+    print(n,v)
+    print(memory_rec[0],memory_rec[1])
+    if output_rec == target:
+        print("Soln:", 100*n + v)
+        break
+    else:
+        continue
 
-search_day2pt2(input.copy(), poss, 19690720)
+# Soln: 100*40 + 19 = 4019
 
+# def search_day2pt2(memory, vars, target, output = 0):
+#     """ 
+#     Recursive function that tests all elements of a list of possibilities (vars) to determine 
+#     if they yield the desired Opcode output (target).
+#     """
+#     n, v = vars.pop(0) # Fix?
+#     memory_rec = memory.copy()
+#     output_rec = day2pt2(memory,n,v) # Input (or "memory") kept having the [0] pos overwritten
 
+#     # print("OK we have noun ",str(n)," and verb ",str(v)," now.")
+#     # print("Our length of remaining vars is ",str(len(vars)),"\n")
+#     # print("We have memory with initial Opcode pointers: ", memory[0],",",memory[4],",",memory[8])
+#     # print("The output is: ",str(output_rec))
 
+#     if output == target:
+#         print("Found. Noun and verb: ", str(n), ", ", str(v))
+#         print("Output: ",str(output))
+#         return 
+#     else:
+#         search_day2pt2(memory_rec, vars, target, output = output_rec)
+#     return 
 
-day2pt2(input.copy(),1,1)
-day2pt2(input.copy(),99,99)
+# # Make sure input is clean before running these fxns
+# with open('2019/input/day2.txt', 'r') as file:
+#     input = file.readlines()
+# input = [int(i) for i in input[0].replace('\n','').split(',')] # Need clean input
 
-#%%
-## https://stackoverflow.com/questions/4632322/finding-all-possible-combinations-of-numbers-to-reach-a-given-sum
-def subset_sum(numbers, target, partial=[], partial_sum=0):
-    if partial_sum == target:
-        yield partial
-    if partial_sum >= target:
-        return
-    for i, n in enumerate(numbers):
-        remaining = numbers[i + 1:]
-        yield from subset_sum(remaining, target, partial + [n], partial_sum + n)
+# # Make a big list of all possible combinations (1,99), inclusive of duplicates like [1,1]
+# poss = [list(comb) for comb in itertools.product(set(range(1,100,1)),repeat=2)] # 9801 possible pairs
 
+# search_day2pt2(input.copy(), poss, 19690720)
 
-# %%
+#%% Day 3
+### Part 1
+with open('2019/input/day3.txt', 'r') as file:
+    input = file.readlines()
+input = [i for i in input]
+
+lines = open('2019/input/day3.txt', 'r').read().splitlines()
+lines
