@@ -1,7 +1,7 @@
 # Advent of Code 2019
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
+from helper import *
 #%% Day 3
 ### Part 1
 ##TODO: Try this with np.meshgrid and with normal 2D arrays (not mgrid, ints dont have steps issue)
@@ -83,6 +83,16 @@ xp = unq[count>1] # This is a bad sign, multiple dupes
 print("Number of total steps", paths.shape[0], " of which ", paths.shape[0]-unq.shape[0], " are Xs.")
 
 xp.shape
+
+plt.scatter(patha[:,0], patha[:,1], marker=".", c="orange", s=1)
+plt.scatter(pathb[:,0], pathb[:,1], marker=".", c="salmon", s=1)
+plt.scatter(xp[:,0], xp[:,1], marker="o", c="dodgerblue", s=3)
+plt.scatter(0, 0, marker="*", c="navy", s=4)
+plt.show()
+
+plt.clf()
+
+plt.cla()
 
 taxi = []
 for i in range(len(xp)):
