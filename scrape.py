@@ -18,11 +18,12 @@ for year in years:
         print("Starting year " + str(year) + ", day " + str(n) + ".")
         puzzle = base_url + r'/' + str(year) + r'/day/' + str(n)
 
-        if os.path.exists(str(year) + "/premise/day" + str(n) + ".txt") is False: 
-            puzzle_premise = requests.get(puzzle, cookies={'session':session_id})
-            with open(str(year)+"/premise/day"+str(n)+".txt", "w", encoding="utf-8") as f:
-                f.write(puzzle_premise.text) # Writes puzzle details/instructions to text file
-            time.sleep(15) # Courtesy sleep per request of @ericwastl
+        ## If you want to pull the "premise" of the problem as well:
+        # if os.path.exists(str(year) + "/premise/day" + str(n) + ".txt") is False: 
+        #     puzzle_premise = requests.get(puzzle, cookies={'session':session_id})
+        #     with open(str(year)+"/premise/day"+str(n)+".txt", "w", encoding="utf-8") as f:
+        #         f.write(puzzle_premise.text) # Writes puzzle details/instructions to text file
+        #     time.sleep(15) # Courtesy sleep per request of @ericwastl
         
         if os.path.exists(str(year) + "/input/day" + str(n) + ".txt") is False: 
             puzzle_input = requests.get(puzzle + r'/input', cookies={'session':session_id}) # Rejected, need to log in
